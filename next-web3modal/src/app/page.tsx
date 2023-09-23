@@ -22,8 +22,8 @@ import { WriteContractPrepared } from "../components/WriteContractPrepared";
 const Page = () => {
   return (
     <>
-      <div className="flex items-center bg-blue-200 justify-center">
-        <div className="shadow-xl rounded p-4 bg-red-300 m-4 sm:w-96 lg:w-1/3">
+      <div className="flex items-center justify-center flex-grow">
+        <div className="shadow-xl rounded p-4 bg-base-300 m-4 sm:w-96 lg:w-1/3">
           <div className="flex-col justify-between mb-4 mt-8">
             <div className="flex justify-center items-center p-1 space-x-2">
               <AmountInput clickedState={false} />

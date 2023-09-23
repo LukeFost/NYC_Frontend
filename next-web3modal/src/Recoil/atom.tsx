@@ -5,18 +5,18 @@ import {
 } from "../components/Swap/TokenSelector/Interfaces/interfaces";
 
 export const token0 = atom<`0x${string}`>({
-  key: "token0",
+  key: "token0Address",
   default: undefined,
 });
 
 export const token1 = atom<`0x${string}`>({
-  key: "token1",
+  key: "token1Address",
   default: undefined,
 });
 
 export const DoSwap = atom<boolean>({
   key: "DoSwap",
-  default: false,
+  default: true,
 });
 export const DoSwitch = atom<boolean>({
   key: "DoSwitch",
@@ -30,6 +30,21 @@ export const tok0Amount = atom<number>({
 export const tok1Amount = atom<number>({
   key: "tok1Amount",
   default: 0,
+});
+
+export const feeLevel = atom<number>({
+  key: "feeLevel",
+  default: 3000,
+});
+
+export const amountOutMinimum = atom<bigint>({
+  key: "amountOutMinimum",
+  default: BigInt(0),
+});
+
+export const sqrtPriceLimitX96 = atom<bigint>({
+  key: "sqrtPriceLimitX96",
+  default: BigInt(0),
 });
 
 export const tokens = atom<TokenVector[]>({

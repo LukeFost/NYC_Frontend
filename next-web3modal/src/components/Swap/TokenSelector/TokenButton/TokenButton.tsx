@@ -20,7 +20,7 @@ export function TokenButton({ onClick, selectedToken }: ISelect) {
     return (
       <button
         onClick={onClick}
-        className={`${baseClass} bg-rose-500 hover:bg-rose-600 text-white`}
+        className={`${baseClass} bg-success hover:bg-rose-600 text-white`}
       >
         <div>Select token</div>
         <FaAngleDown />
