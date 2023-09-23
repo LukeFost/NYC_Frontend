@@ -12,6 +12,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { useContractReads, erc20ABI, useAccount } from "wagmi";
 import { formatUnits } from "viem";
 import SwapButton from "../SwapButton/SwapButton";
+import ApproveButton from "../ApproveButton.tsx/ApproveButton";
 
 type Contractread = {
   restult?: {
@@ -29,7 +30,6 @@ const Approval = () => {
   const [atok1Amount, setTok1Amount] = useRecoilState(tok1Amount);
   const [atok0Amount, setAToke0Amount] = useRecoilState(tok0Amount);
   const [approveVisibility, setApprovalVisibility] = useRecoilState(DoSwap);
-
   const [activeToken, setActiveToken] = useState<`0x${string}`>("0x");
   const [allowance, setAllowance] = useState(BigInt(0));
   const [tokenDecimals, setTokenDecimals] = useState(0);
@@ -37,7 +37,7 @@ const Approval = () => {
   // Now I have the state for Doswap, token0, & token1
   //   // Now I have to check state for switch
   const { address } = useAccount();
-  const spender = "0xd14838A68E8AFBAdE5efb411d5871ea0011AFd28";
+  const spender = "0x3fC91A3afd70395Cd496C647d5a6CC9D4B2b7FAD";
 
   const { data, isSuccess, isLoading } = useContractReads({
     contracts: [
@@ -112,7 +112,7 @@ const Approval = () => {
     }
   }, [TheSwitch, currentToken0, currentToken1]);
 
-  const testFunction = () => {
+  const writeApproval = () => {
     console.log(tokenDecimals);
     console.log(allowance);
     console.log(approveVisibility);
@@ -122,11 +122,9 @@ const Approval = () => {
   return (
     <>
       {approveVisibility ? (
-        <button className="btn btn-secondary" onClick={testFunction}>
-          Approve
-        </button>
+        <ApproveButton activeToken={activeToken} />
       ) : (
-        <SwapButton onClick={testFunction} />
+        <SwapButton />
       )}
     </>
   );

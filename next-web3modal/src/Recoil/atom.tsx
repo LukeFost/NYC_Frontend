@@ -36,11 +36,27 @@ export const tokens = atom<TokenVector[]>({
   key: "tokens",
   default: [
     {
-      protocol: "Linkie",
+      protocol: "Goerli",
       token: {
         name: "ETHER",
         symbol: "ETH",
         address: "0x",
+      },
+    },
+    {
+      protocol: "Arbitrum Goerli",
+      token: {
+        name: "Hogwell",
+        symbol: "HOG",
+        address: "0x3cA0BDc410F58d04564C07ecD7f9A994F012e04b",
+      },
+    },
+    {
+      protocol: "Arbitrum Goerli",
+      token: {
+        name: "Wrapped ETH",
+        symbol: "WETH",
+        address: "0x865782BE8B791A8C11D174Da06D60Fa32828459C",
       },
     },
   ],

@@ -1,9 +1,5 @@
-interface SBinterface {
-  onClick: () => void;
-}
-
-const SwapButton = ({ onClick }: SBinterface) => {
-  return <input onClick={onClick} className="btn btn-primary" />;
+const SwapButton = () => {
+  return <></>;
 };
 
 export default SwapButton;

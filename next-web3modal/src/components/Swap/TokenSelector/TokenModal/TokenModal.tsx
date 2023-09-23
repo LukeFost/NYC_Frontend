@@ -10,7 +10,6 @@ import { useRecoilState } from "recoil";
 import { token0, token1, tokens } from "../../../../Recoil/atom";
 import { getAddress } from "viem";
 import { useContractReads, erc20ABI, useNetwork } from "wagmi";
-import { erc20_abi } from "../../../ABI/erc20_abi";
 
 export default function TokenModal({
   selectedToken,
@@ -168,24 +167,43 @@ export default function TokenModal({
                   >
                     Select a token
                   </Dialog.Title>
-                  <input
-                    type="text"
-                    placeholder={isLoading ? "Loading..." : "Type here..."}
-                    className="input input-bordered w-full mt-2 mb-2 max-w-sm"
-                    onChange={(e) => {
-                      const inputValue = e.target.value;
-                      // Check if the input is 42 characters long and starts with '0x'
-                      const isValid = /^0x[a-fA-F0-9]{40}$/.test(inputValue);
+                  <div className="flex items-center">
+                    <input
+                      type="text"
+                      placeholder={isLoading ? "Loading..." : "Type here..."}
+                      className="input input-bordered mt-2 mb-2 flex-grow mr-2.5"
+                      onChange={(e) => {
+                        const inputValue = e.target.value;
+                        const isValid = /^0x[a-fA-F0-9]{40}$/.test(inputValue);
+                        if (isValid) {
+                          setAddress(getAddress(inputValue));
+                          setWarning(false);
+                        } else {
+                          setWarning(true);
+                        }
+                      }}
+                    />
+                    <button
+                      onClick={handleSubmit}
+                      className="btn btn-square justify-center items-center btn-outline w-12 h-12"
+                    >
+                      <svg
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="1.5"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                        aria-hidden="true"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M12 4.5v15m7.5-7.5h-15"
+                        ></path>
+                      </svg>
+                    </button>
+                  </div>
 
-                      if (isValid) {
-                        setAddress(getAddress(inputValue));
-                        setWarning(false);
-                      } else {
-                        setWarning(true);
-                      }
-                    }}
-                  />
-                  <button onClick={handleSubmit}>+</button>
                   {warning ? (
                     <div className="alert alert-error">
                       <svg
