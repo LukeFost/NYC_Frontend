@@ -2,7 +2,6 @@ import { Account } from "../components/Account";
 import { Balance } from "../components/Balance";
 import { BlockNumber } from "../components/BlockNumber";
 import { Connected } from "../components/Connected";
-import { NetworkSwitcher } from "../components/NetworkSwitcher";
 import { ReadContract } from "../components/ReadContract";
 import { ReadContracts } from "../components/ReadContracts";
 import { ReadContractsInfinite } from "../components/ReadContractsInfinite";
@@ -13,26 +12,34 @@ import { SignTypedData } from "../components/SignTypedData";
 import { Token } from "../components/Token";
 import { WatchContractEvents } from "../components/WatchContractEvents";
 import { WatchPendingTransactions } from "../components/WatchPendingTransactions";
-import { Web3Button } from "../components/Web3Button";
 import { WriteContract } from "../components/WriteContract";
 import { WriteContractPrepared } from "../components/WriteContractPrepared";
-import Link from "next/link";
 
 const Page = () => {
   return (
     <>
-      <h1 className="text-3xl font-bold underline">
-        wagmi + Web3Modal + Next.js
-      </h1>
-      <Link href={"/boost"}>Boost</Link>
-      <h1 className="underline">Hello</h1>
-
-      <Web3Button />
+      <h3 className="p-4">Theme Switcher</h3>
+      <input
+        data-toggle-theme="light,dark"
+        data-act-class="ACTIVECLASS"
+        type="checkbox"
+        className="toggle"
+      />
+      <article className="prose">
+        <h1>Sally Sells</h1>
+        <p>
+          Sea shells by the sea shore, but for a long time many would see this
+          as an affront to all that is holy. Or so they would have normally
+          thought if it was not for the valiant efforts of the Straw Hat Gang!
+        </p>
+      </article>
+      <label className="swap">
+        <input type="checkbox" />
+        <div className="swap-on">ON</div>
+        <div className="swap-off">OFF</div>
+      </label>
 
       <Connected>
-        <hr />
-        <h2>Network</h2>
-        <NetworkSwitcher />
         <br />
         <hr />
         <h2>Account</h2>
