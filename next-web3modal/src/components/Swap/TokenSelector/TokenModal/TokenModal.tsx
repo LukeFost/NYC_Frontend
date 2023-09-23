@@ -80,6 +80,11 @@ export default function TokenModal({
                   >
                     Select a token
                   </Dialog.Title>
+                  <input
+                    type="text"
+                    placeholder="Type here"
+                    className="input input-bordered w-full mt-2 mb-2 max-w-xs"
+                  />
                   <div className="mt-2">
                     <TokenList
                       onClick={handleClick}

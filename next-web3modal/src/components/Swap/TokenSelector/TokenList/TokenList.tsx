@@ -4,7 +4,7 @@ import { TokenListItem } from "../TokenListItem/TokenListItem";
 
 const TokenList = ({ selectedToken, onClick }: ISelectOther) => {
   return (
-    <div>
+    <div className="flex flex-col gap-4">
       {tokens.map((token, idx) => (
         <TokenListItem
           token={token}
