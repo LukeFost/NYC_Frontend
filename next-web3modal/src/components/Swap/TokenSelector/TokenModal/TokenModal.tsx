@@ -2,20 +2,15 @@
 "use client";
 
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useState } from "react";
 import { ITokenModal, Token, TokenVector } from "../Interfaces/interfaces";
 import { TokenButton } from "../TokenButton/TokenButton";
 import TokenList from "../TokenList/TokenList";
-import React, { useEffect } from "react";
+import React, { useEffect, Fragment, useState } from "react";
 import { useRecoilState } from "recoil";
 import { token0, token1, tokens } from "../../../../Recoil/atom";
 import { getAddress } from "viem";
 import { useContractReads, erc20ABI, useNetwork } from "wagmi";
 import { erc20_abi } from "../../../ABI/erc20_abi";
-
-interface getTokenInterface {
-  address: `0x${string}`;
-}
 
 export default function TokenModal({
   selectedToken,
@@ -34,11 +29,6 @@ export default function TokenModal({
   const [currentTokens, setTokens] = useRecoilState(tokens);
 
   const { chain } = useNetwork();
-
-  const tokenContractConfig = {
-    address: address,
-    abi: erc20_abi,
-  } as const;
 
   const { data, isSuccess, isLoading } = useContractReads({
     contracts: [
@@ -109,6 +99,29 @@ export default function TokenModal({
     setIsOpen(false);
   }
 
+  useEffect(() => {
+    if (selectedToken && selectedToken.address) {
+      if (clickedState === true) {
+        setCurrentToken0(selectedToken.address);
+        console.log(selectedToken.address);
+      } else if (clickedState === false) {
+        setCurrentToken1(selectedToken.address);
+        console.log(selectedToken.address);
+      } else {
+        console.log("ERROR IN CLICKSTATE");
+      }
+    }
+  }, [clickedState, selectedToken, setCurrentToken0, setCurrentToken1]);
+
+  useEffect(() => {
+    console.log("Token 0 Set", currentToken0);
+    console.log("Selected Token Logic, Token 0", selectedToken?.address!);
+  }, [currentToken0, selectedToken]);
+
+  useEffect(() => {
+    console.log("Token 0 Set", currentToken1);
+  }, [currentToken1, selectedToken]);
+
   function openModal() {
     setWarning(false);
     setIsOpen(true);
@@ -118,26 +131,6 @@ export default function TokenModal({
     onClick(token);
     closeModal();
   }
-
-  useEffect(() => {
-    if (clickedState) {
-      //settoken0state
-      setCurrentToken0(selectedToken?.address!);
-    } else {
-      //settoken1state
-      setCurrentToken1(selectedToken?.address!);
-    }
-
-    //if both have state fetchpool address
-  }, [
-    selectedToken,
-    currentToken0,
-    currentToken1,
-    setCurrentToken0,
-    setCurrentToken1,
-    tokenVector,
-    setTokenVector,
-  ]);
 
   return (
     <>
