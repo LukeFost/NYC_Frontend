@@ -1,11 +1,12 @@
 import { w3mConnectors, w3mProvider } from '@web3modal/ethereum'
 import { configureChains, createConfig } from 'wagmi'
-import { goerli, mainnet } from 'wagmi/chains'
+import { goerli, mainnet, baseGoerli, mantleTestnet, scrollSepolia, arbitrumGoerli, polygonZkEvmTestnet
+ } from '@wagmi/chains'
 
 export const walletConnectProjectId = '9240491d00004f3f8ccb20ef90757e78'
 
 const { chains, publicClient, webSocketPublicClient } = configureChains(
-  [mainnet, ...(process.env.NODE_ENV === 'development' ? [goerli] : [])],
+  [polygonZkEvmTestnet, arbitrumGoerli, scrollSepolia, mantleTestnet, baseGoerli, mainnet, ...(process.env.NODE_ENV === 'development' ? [goerli] : [])],
   [w3mProvider({ projectId: walletConnectProjectId })],
 )
 
