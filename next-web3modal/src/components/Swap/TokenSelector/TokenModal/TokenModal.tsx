@@ -3,12 +3,19 @@
 
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
-import { ITokenModal, Token } from "../Interfaces/interfaces";
+import { ITokenModal, Token, TokenVector } from "../Interfaces/interfaces";
 import { TokenButton } from "../TokenButton/TokenButton";
 import TokenList from "../TokenList/TokenList";
 import React, { useEffect } from "react";
 import { useRecoilState } from "recoil";
-import { token0, token1 } from "../../../../Recoil/atom";
+import { token0, token1, tokens } from "../../../../Recoil/atom";
+import { getAddress } from "viem";
+import { useContractReads, erc20ABI, useNetwork } from "wagmi";
+import { erc20_abi } from "../../../ABI/erc20_abi";
+
+interface getTokenInterface {
+  address: `0x${string}`;
+}
 
 export default function TokenModal({
   selectedToken,
@@ -17,13 +24,93 @@ export default function TokenModal({
 }: ITokenModal) {
   const [currentToken0, setCurrentToken0] = useRecoilState(token0);
   const [currentToken1, setCurrentToken1] = useRecoilState(token1);
+
+  //State for temp input values
+  const [address, setAddress] = useState<`0x${string}`>("0x");
+  const [warning, setWarning] = useState<boolean>(false);
+
+  const [tokenVector, setTokenVector] = useState<TokenVector | null>(null);
+
+  const [currentTokens, setTokens] = useRecoilState(tokens);
+
+  const { chain } = useNetwork();
+
+  const tokenContractConfig = {
+    address: address,
+    abi: erc20_abi,
+  } as const;
+
+  const { data, isSuccess, isLoading } = useContractReads({
+    contracts: [
+      {
+        address: address,
+        abi: erc20ABI,
+        functionName: "name",
+      },
+      {
+        address: address,
+        abi: erc20ABI,
+        functionName: "symbol",
+      },
+    ],
+  });
+
+  const handleSubmit = async () => {
+    try {
+      if (isSuccess && data) {
+        const localName = data[0]?.result!;
+        const localSymbol = data[1]?.result;
+        const localProtocol = chain?.name!;
+
+        if (localName && localSymbol && localProtocol) {
+          const token: Token = {
+            name: localName,
+            symbol: localSymbol,
+            address,
+          };
+
+          const newTokenVector: TokenVector = {
+            protocol: localProtocol,
+            token,
+          };
+
+          setTokenVector(newTokenVector);
+          setWarning(false);
+        }
+      } else {
+        setWarning(true);
+        return null;
+      }
+    } catch (error) {
+      console.error(error);
+      alert("An error ocurred while reading the contract.");
+    }
+  };
+
+  useEffect(() => {
+    if (tokenVector) {
+      const addressExists = currentTokens.some(
+        (existingTokenVector) =>
+          existingTokenVector.token.address === tokenVector.token.address
+      );
+      if (!addressExists) {
+        setTokens((prevTokens) => [...prevTokens, tokenVector]);
+        setWarning(false);
+      } else {
+        setWarning(true);
+      }
+    }
+  }, [tokenVector, tokens]);
+
   let [isOpen, setIsOpen] = useState(false);
 
   function closeModal() {
+    setWarning(false);
     setIsOpen(false);
   }
 
   function openModal() {
+    setWarning(false);
     setIsOpen(true);
   }
 
@@ -42,7 +129,15 @@ export default function TokenModal({
     }
 
     //if both have state fetchpool address
-  }, [selectedToken, currentToken0, currentToken1]);
+  }, [
+    selectedToken,
+    currentToken0,
+    currentToken1,
+    setCurrentToken0,
+    setCurrentToken1,
+    tokenVector,
+    setTokenVector,
+  ]);
 
   return (
     <>
@@ -82,9 +177,40 @@ export default function TokenModal({
                   </Dialog.Title>
                   <input
                     type="text"
-                    placeholder="Type here"
-                    className="input input-bordered w-full mt-2 mb-2 max-w-xs"
+                    placeholder={isLoading ? "Loading..." : "Type here..."}
+                    className="input input-bordered w-full mt-2 mb-2 max-w-sm"
+                    onChange={(e) => {
+                      const inputValue = e.target.value;
+                      // Check if the input is 42 characters long and starts with '0x'
+                      const isValid = /^0x[a-fA-F0-9]{40}$/.test(inputValue);
+
+                      if (isValid) {
+                        setAddress(getAddress(inputValue));
+                        setWarning(false);
+                      } else {
+                        setWarning(true);
+                      }
+                    }}
                   />
+                  <button onClick={handleSubmit}>+</button>
+                  {warning ? (
+                    <div className="alert alert-error">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="stroke-current shrink-0 h-6 w-6"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+                        />
+                      </svg>
+                      <span>Error!</span>
+                    </div>
+                  ) : null}
                   <div className="mt-2">
                     <TokenList
                       onClick={handleClick}

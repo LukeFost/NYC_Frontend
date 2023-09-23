@@ -23,12 +23,22 @@ const Page = () => {
       <div className="flex items-center bg-blue-200 justify-center">
         <div className="shadow-xl rounded p-4 bg-red-300 m-4 sm:w-96 lg:w-1/3">
           <div className="flex-col justify-between mb-4 mt-8">
-            <div className="flex justify-center p-1">
+            <div className="flex justify-center items-center p-1 space-x-2">
+              <input
+                type="number"
+                placeholder="..."
+                className="input input-bordered max-w-xs"
+              />
               <TokenSelector clickedState={true} />
             </div>
             <Switcher />
-            <div className="flex justify-center p-1">
-              <TokenSelector clickedState={false} />
+            <div className="flex justify-center items-center p-1 space-x-2">
+              <input
+                type="number"
+                placeholder="..."
+                className="input input-bordered max-w-xs"
+              />
+              <TokenSelector clickedState={true} />
             </div>
           </div>
           <div className="flex items-center justify-center mt-8">

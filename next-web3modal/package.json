@@ -17,6 +17,7 @@
     "@web3modal/react": "2.4.1",
     "next": "^13.4.0",
     "react": "^18.2.0",
+    "react-cookie": "^6.1.1",
     "react-dom": "^18.2.0",
     "react-icons": "^4.11.0",
     "recoil": "^0.7.7",

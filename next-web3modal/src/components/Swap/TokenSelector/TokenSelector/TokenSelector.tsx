@@ -4,7 +4,6 @@
 import React, { useState } from "react";
 import { Token } from "../Interfaces/interfaces";
 import TokenModal from "../TokenModal/TokenModal";
-import { RecoilRoot } from "recoil";
 
 interface TokenSelectorProps {
   clickedState: boolean;
@@ -16,15 +15,13 @@ const TokenSelector = ({ clickedState }: TokenSelectorProps) => {
   );
 
   return (
-    <RecoilRoot>
-      <div className="flex justify-center items-center">
-        <TokenModal
-          selectedToken={selectedToken}
-          onClick={(token: Token) => setSelectedToken(token)}
-          clickedState={clickedState}
-        />
-      </div>
-    </RecoilRoot>
+    <div className="flex justify-center items-center">
+      <TokenModal
+        selectedToken={selectedToken}
+        onClick={(token: Token) => setSelectedToken(token)}
+        clickedState={clickedState}
+      />
+    </div>
   );
 };
 

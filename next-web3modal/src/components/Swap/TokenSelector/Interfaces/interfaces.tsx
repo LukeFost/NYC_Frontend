@@ -9,7 +9,6 @@ export interface ISelectOther {
 }
 
 export interface Token {
-  id: number;
   name: string;
   symbol: string;
   address: `0x${string}`;
@@ -20,20 +19,18 @@ export interface TokenVector {
   token: Token;
 }
 
-export const tokens: Token[] = [
-  {
-    id: 1,
-    name: "Ether",
-    symbol: "ETH",
-    address: "0x",
-  },
-  {
-    id: 2,
-    name: "Wrapped Ether",
-    symbol: "WETH",
-    address: "0x",
-  },
-];
+// export const tokens: Token[] = [
+//   {
+//     name: "Ether",
+//     symbol: "ETH",
+//     address: "0x",
+//   },
+//   {
+//     name: "Wrapped Ether",
+//     symbol: "WETH",
+//     address: "0x",
+//   },
+// ];
 
 export interface ITokenModal {
   selectedToken: Token | undefined;
