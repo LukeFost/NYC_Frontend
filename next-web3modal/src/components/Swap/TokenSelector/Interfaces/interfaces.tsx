@@ -1,6 +1,6 @@
 export interface ISelect {
   onClick: () => void;
-  selectedToken: Token | undefined;
+  selectedToken?: Token;
 }
 
 export interface Token {
@@ -24,4 +24,12 @@ export const tokens: Token[] = [
 
 export interface ITokenModal {
   selectedToken: Token | undefined;
+  onClick: (token: Token) => void;
+  clickedState: boolean;
+}
+
+export interface ITokenListItem {
+  token: Token;
+  selected: boolean;
+  onClick: (token: Token) => void;
 }

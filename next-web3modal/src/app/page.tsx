@@ -10,7 +10,7 @@ import { SendTransactionPrepared } from "../components/SendTransactionPrepared";
 import { SignMessage } from "../components/SignMessage";
 import { SignTypedData } from "../components/SignTypedData";
 import Switcher from "../components/Swap/Switcher/Switcher";
-import TokenModal from "../components/Swap/TokenSelector/TokenModal/TokenModal";
+import TokenSelector from "../components/Swap/TokenSelector/TokenSelector/TokenSelector";
 import { Token } from "../components/Token";
 import { WatchContractEvents } from "../components/WatchContractEvents";
 import { WatchPendingTransactions } from "../components/WatchPendingTransactions";
@@ -24,11 +24,11 @@ const Page = () => {
         <div className="shadow-xl rounded p-4 w-1/3">
           <div className="flex-col justify-between mb-4 mt-8">
             <div className="flex justify-center p-1">
-              <TokenModal selectedToken={undefined} />
+              <TokenSelector clickedState={true} />
             </div>
             <Switcher />
             <div className="flex justify-center p-1">
-              <TokenModal selectedToken={undefined} />
+              <TokenSelector clickedState={false} />
             </div>
           </div>
           <div className="flex items-center justify-center mt-8">

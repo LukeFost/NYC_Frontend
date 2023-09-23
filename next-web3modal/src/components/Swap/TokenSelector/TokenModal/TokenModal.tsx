@@ -3,10 +3,20 @@
 
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
-import { ITokenModal } from "../Interfaces/interfaces";
+import { ITokenModal, Token } from "../Interfaces/interfaces";
 import { TokenButton } from "../TokenButton/TokenButton";
+import TokenList from "../TokenList/TokenList";
+import React, { useEffect } from "react";
+import { useRecoilState } from "recoil";
+import { token0, token1 } from "../../../../Recoil/atom";
 
-export default function TokenModal({ selectedToken }: ITokenModal) {
+export default function TokenModal({
+  selectedToken,
+  onClick,
+  clickedState,
+}: ITokenModal) {
+  const [currentToken0, setCurrentToken0] = useRecoilState(token0);
+  const [currentToken1, setCurrentToken1] = useRecoilState(token1);
   let [isOpen, setIsOpen] = useState(false);
 
   function closeModal() {
@@ -16,6 +26,23 @@ export default function TokenModal({ selectedToken }: ITokenModal) {
   function openModal() {
     setIsOpen(true);
   }
+
+  function handleClick(token: Token) {
+    onClick(token);
+    closeModal();
+  }
+
+  useEffect(() => {
+    if (clickedState) {
+      //settoken0state
+      setCurrentToken0(selectedToken?.address!);
+    } else {
+      //settoken1state
+      setCurrentToken1(selectedToken?.address!);
+    }
+
+    //if both have state fetchpool address
+  }, [selectedToken, currentToken0, currentToken1]);
 
   return (
     <>
@@ -54,9 +81,10 @@ export default function TokenModal({ selectedToken }: ITokenModal) {
                     Select a token
                   </Dialog.Title>
                   <div className="mt-2">
-                    <p className="text-sm text-gray-500">
-                      Not implemented yet.
-                    </p>
+                    <TokenList
+                      onClick={handleClick}
+                      selectedToken={selectedToken}
+                    />
                   </div>
                 </Dialog.Panel>
               </Transition.Child>
