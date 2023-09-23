@@ -3,7 +3,7 @@ import "./globals.css";
 import { Providers } from "./providers";
 
 export const metadata = {
-  title: "wagmi",
+  title: "NYC Uniswap",
 };
 
 export default function RootLayout({

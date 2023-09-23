@@ -9,6 +9,8 @@ import { SendTransaction } from "../components/SendTransaction";
 import { SendTransactionPrepared } from "../components/SendTransactionPrepared";
 import { SignMessage } from "../components/SignMessage";
 import { SignTypedData } from "../components/SignTypedData";
+import Switcher from "../components/Swap/Switcher/Switcher";
+import TokenModal from "../components/Swap/TokenSelector/TokenModal/TokenModal";
 import { Token } from "../components/Token";
 import { WatchContractEvents } from "../components/WatchContractEvents";
 import { WatchPendingTransactions } from "../components/WatchPendingTransactions";
@@ -18,26 +20,22 @@ import { WriteContractPrepared } from "../components/WriteContractPrepared";
 const Page = () => {
   return (
     <>
-      <h3 className="p-4">Theme Switcher</h3>
-      <input
-        data-toggle-theme="light,dark"
-        data-act-class="ACTIVECLASS"
-        type="checkbox"
-        className="toggle"
-      />
-      <article className="prose">
-        <h1>Sally Sells</h1>
-        <p>
-          Sea shells by the sea shore, but for a long time many would see this
-          as an affront to all that is holy. Or so they would have normally
-          thought if it was not for the valiant efforts of the Straw Hat Gang!
-        </p>
-      </article>
-      <label className="swap">
-        <input type="checkbox" />
-        <div className="swap-on">ON</div>
-        <div className="swap-off">OFF</div>
-      </label>
+      <div className="flex items-center justify-center">
+        <div className="shadow-xl rounded p-4 w-1/3">
+          <div className="flex-col justify-between mb-4 mt-8">
+            <div className="flex justify-center p-1">
+              <TokenModal selectedToken={undefined} />
+            </div>
+            <Switcher />
+            <div className="flex justify-center p-1">
+              <TokenModal selectedToken={undefined} />
+            </div>
+          </div>
+          <div className="flex items-center justify-center mt-8">
+            <button className="btn btn-primary">Approve</button>
+          </div>
+        </div>
+      </div>
 
       <Connected>
         <br />
