@@ -16,11 +16,16 @@ import { WatchPendingTransactions } from "../components/WatchPendingTransactions
 import { Web3Button } from "../components/Web3Button";
 import { WriteContract } from "../components/WriteContract";
 import { WriteContractPrepared } from "../components/WriteContractPrepared";
+import Link from "next/link";
 
 const Page = () => {
   return (
     <>
-      <h1>wagmi + Web3Modal + Next.js</h1>
+      <h1 className="text-3xl font-bold underline">
+        wagmi + Web3Modal + Next.js
+      </h1>
+      <Link href={"/boost"}>Boost</Link>
+      <h1 className="underline">Hello</h1>
 
       <Web3Button />
 
