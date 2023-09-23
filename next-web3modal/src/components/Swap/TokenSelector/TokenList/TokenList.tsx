@@ -1,8 +1,8 @@
-import { ISelect } from "../Interfaces/interfaces";
+import { ISelectOther } from "../Interfaces/interfaces";
 import { tokens } from "../Interfaces/interfaces";
 import { TokenListItem } from "../TokenListItem/TokenListItem";
 
-const TokenList = ({ selectedToken, onClick }: ISelect) => {
+const TokenList = ({ selectedToken, onClick }: ISelectOther) => {
   return (
     <div>
       {tokens.map((token, idx) => (
