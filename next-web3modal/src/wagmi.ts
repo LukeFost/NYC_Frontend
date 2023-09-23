@@ -1,14 +1,27 @@
-import { w3mConnectors, w3mProvider } from '@web3modal/ethereum'
-import { configureChains, createConfig } from 'wagmi'
-import { goerli, mainnet, baseGoerli, mantleTestnet, scrollSepolia, arbitrumGoerli, polygonZkEvmTestnet
- } from '@wagmi/chains'
+import { w3mConnectors, w3mProvider } from "@web3modal/ethereum";
+import { configureChains, createConfig } from "wagmi";
+import {
+  goerli,
+  baseGoerli,
+  mantleTestnet,
+  scrollSepolia,
+  arbitrumGoerli,
+  polygonZkEvmTestnet,
+} from "@wagmi/chains";
 
-export const walletConnectProjectId = '9240491d00004f3f8ccb20ef90757e78'
+export const walletConnectProjectId = "9240491d00004f3f8ccb20ef90757e78";
 
 const { chains, publicClient, webSocketPublicClient } = configureChains(
-  [polygonZkEvmTestnet, arbitrumGoerli, scrollSepolia, mantleTestnet, baseGoerli, mainnet, ...(process.env.NODE_ENV === 'development' ? [goerli] : [])],
-  [w3mProvider({ projectId: walletConnectProjectId })],
-)
+  [
+    polygonZkEvmTestnet,
+    arbitrumGoerli,
+    scrollSepolia,
+    mantleTestnet,
+    baseGoerli,
+    goerli,
+  ],
+  [w3mProvider({ projectId: walletConnectProjectId })]
+);
 
 export const config = createConfig({
   autoConnect: true,
@@ -19,6 +32,6 @@ export const config = createConfig({
   }),
   publicClient,
   webSocketPublicClient,
-})
+});
 
-export { chains }
+export { chains };
