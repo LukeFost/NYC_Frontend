@@ -3,6 +3,10 @@ import {
   Token,
   TokenVector,
 } from "../components/Swap/TokenSelector/Interfaces/interfaces";
+import {
+  PoolVector,
+  Pool,
+} from "../components/PartyBoost/PoolBooster/Interfaces/interfaces";
 
 export const token0 = atom<`0x${string}`>({
   key: "token0Address",
@@ -80,4 +84,28 @@ export const tokens = atom<TokenVector[]>({
       },
     },
   ],
+});
+
+export const pools = atom<PoolVector[]>({
+  key: "thepools",
+  default: [
+    {
+      protocol: "Arbitrum Goerli",
+      pool: {
+        name: "ETHER",
+        symbol: "ETH",
+        address: "0x",
+      },
+    },
+  ],
+});
+
+export const pool0 = atom<`0x${string}`>({
+  key: "pool0Address",
+  default: undefined,
+});
+
+export const pool1 = atom<`0x${string}`>({
+  key: "pool1Address",
+  default: undefined,
 });
