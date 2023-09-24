@@ -44,26 +44,32 @@ const Hamburger = () => {
             <div className="px-1 py-1 ">
               <Menu.Item>
                 {({ active }) => (
-                  <button
-                    className={`${
-                      active ? "bg-violet-500 text-white" : "text-gray-900"
-                    } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
-                  >
-                    <Link href={"/boost"}>Boost</Link>
-                  </button>
+                  <Link href={"/pool"}>
+                    {" "}
+                    <button
+                      className={`${
+                        active ? "bg-violet-500 text-white" : "text-gray-900"
+                      } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                    >
+                      POOL
+                    </button>
+                  </Link>
                 )}
               </Menu.Item>
             </div>
             <div className="px-1 py-1 ">
               <Menu.Item>
                 {({ active }) => (
-                  <button
-                    className={`${
-                      active ? "bg-violet-500 text-white" : "text-gray-900"
-                    } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
-                  >
-                    <Link href={"/swap"}>Swap</Link>
-                  </button>
+                  <Link href={"/party"}>
+                    {" "}
+                    <button
+                      className={`${
+                        active ? "bg-violet-500 text-white" : "text-gray-900"
+                      } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                    >
+                      PARTY
+                    </button>
+                  </Link>
                 )}
               </Menu.Item>
             </div>

@@ -11,9 +11,9 @@ const NavBar = () => {
   return (
     <>
       <div className="navbar bg-base-100">
-        {/* <div className="flex-none">
+        <div className="flex-none">
           <Ellipsis></Ellipsis>
-        </div> */}
+        </div>
 
         <div className="flex-1">
           <Link href={"/"}>
@@ -26,9 +26,9 @@ const NavBar = () => {
         <div className="flex-none pr-4">
           <Web3Button />
         </div>
-        <div className="flex-none">
+        {/* <div className="flex-none">
           <Hamburger></Hamburger>
-        </div>
+        </div> */}
       </div>
     </>
   );
