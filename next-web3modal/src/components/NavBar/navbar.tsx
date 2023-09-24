@@ -11,9 +11,9 @@ const NavBar = () => {
   return (
     <>
       <div className="navbar bg-base-100">
-        <div className="flex-none">
+        {/* <div className="flex-none">
           <Ellipsis></Ellipsis>
-        </div>
+        </div> */}
 
         <div className="flex-1">
           <Link href={"/"}>

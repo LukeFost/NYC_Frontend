@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BaseError } from "viem";
 import {
   erc20ABI,
@@ -10,6 +10,8 @@ import {
   useNetwork,
 } from "wagmi";
 import { swapRouter_abi } from "../../ABI/swapRouter_abi";
+import { customChangerMinimum } from "../../../Recoil/atom";
+import { useRecoilState } from "recoil";
 
 interface ISwapButton {
   tokenIn: `0x${string}`;
@@ -32,6 +34,9 @@ const SwapButton = ({
 }: ISwapButton) => {
   const { chain } = useNetwork();
 
+  const [customChangeAmount, setCustomChangeAmount] =
+    useRecoilState(customChangerMinimum);
+
   const activeAddress =
     chain?.name === "Arbitrum Goerli"
       ? "0xab7664500b19a7a2362Ab26081e6DfB971B6F1B0"
@@ -47,13 +52,20 @@ const SwapButton = ({
     sqrtPriceLimitX96: sqrtPriceLimitX96,
   };
 
-  const { config, error } = usePrepareContractWrite({
+  const { config, error, data } = usePrepareContractWrite({
     address: activeAddress,
     abi: swapRouter_abi,
     functionName: "exactInputSingle",
     args: [ExactInputSingleParams],
     value: BigInt(0),
   });
+
+  useEffect(() => {
+    if (data && customChangeAmount !== data.result) {
+      setCustomChangeAmount(data.result);
+      console.log("My request for DATA!!!");
+    }
+  }, [data, customChangeAmount, setCustomChangeAmount]);
   const { write, isLoading } = useContractWrite(config);
 
   let noValue = amountIn <= 0;

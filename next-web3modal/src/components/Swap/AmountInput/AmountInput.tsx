@@ -1,7 +1,13 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { tok1Amount, tok0Amount, DoSwitch } from "../../../Recoil/atom";
+import {
+  tok1Amount,
+  tok0Amount,
+  DoSwitch,
+  customChangerMinimum,
+} from "../../../Recoil/atom";
+import { formatEther } from "viem";
 
 interface AmountInputInterface {
   clickedState: boolean;
@@ -11,6 +17,7 @@ const AmountInput = ({ clickedState }: AmountInputInterface) => {
   const [inputValue, setInputValue] = useRecoilState(tok1Amount);
   const [otherInputValue, setOtherInputValue] = useRecoilState(tok0Amount);
   const theDoSwitch = useRecoilValue(DoSwitch);
+  const valueToDisplay = useRecoilValue(customChangerMinimum);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (theDoSwitch) {
@@ -41,7 +48,7 @@ const AmountInput = ({ clickedState }: AmountInputInterface) => {
   return (
     <input
       type="number"
-      placeholder="..."
+      placeholder={isDisabled ? formatEther(valueToDisplay) : "..."}
       min={0}
       onPaste={preventPasteNegative}
       onKeyPress={preventMinus}

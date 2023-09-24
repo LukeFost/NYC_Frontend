@@ -23,12 +23,12 @@ export const DoSwitch = atom<boolean>({
   default: false,
 });
 export const tok0Amount = atom<number>({
-  key: "tok0Amount",
+  key: "thetok0Amount",
   default: 0,
 });
 
 export const tok1Amount = atom<number>({
-  key: "tok1Amount",
+  key: "atok1Amount",
   default: 0,
 });
 
@@ -38,7 +38,7 @@ export const feeLevel = atom<number>({
 });
 
 export const amountOutMinimum = atom<bigint>({
-  key: "amountOutMinimum",
+  key: "theamountOutMinimum",
   default: BigInt(0),
 });
 
@@ -47,8 +47,13 @@ export const sqrtPriceLimitX96 = atom<bigint>({
   default: BigInt(0),
 });
 
+export const customChangerMinimum = atom<bigint>({
+  key: "thecustomWoopdidoo",
+  default: BigInt(0),
+});
+
 export const tokens = atom<TokenVector[]>({
-  key: "tokens",
+  key: "thetokens",
   default: [
     {
       protocol: "Goerli",
