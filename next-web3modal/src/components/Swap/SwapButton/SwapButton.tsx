@@ -54,13 +54,45 @@ const SwapButton = ({
     args: [ExactInputSingleParams],
     value: BigInt(0),
   });
-  const { write } = useContractWrite(config);
+  const { write, isLoading } = useContractWrite(config);
+
+  let noValue = amountIn <= 0;
 
   return (
     <>
-      <button disabled={!write} onClick={() => write?.()}>
-        Swap
-      </button>
+      {isLoading ? (
+        <button
+          className="btn btn-wide"
+          disabled={true}
+          onClick={() => write?.()}
+        >
+          <span className="loading loading-spinner"></span>
+          Loading...
+        </button>
+      ) : (
+        <button
+          className="btn btn-wide"
+          disabled={!write || noValue}
+          onClick={() => write?.()}
+        >
+          <svg
+            className="h-6 w-6"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z"
+            ></path>
+          </svg>
+          Swap
+        </button>
+      )}
       {error && (
         <div>
           An error has occurred prepping the transaction: {error.message}

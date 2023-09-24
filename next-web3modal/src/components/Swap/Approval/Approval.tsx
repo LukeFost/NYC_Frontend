@@ -161,7 +161,6 @@ const Approval = () => {
 
   return (
     <>
-      <button onClick={writeApproval}>Click Me</button>
       {approveVisibility ? (
         <ApproveButton activeToken={activeToken} />
       ) : (

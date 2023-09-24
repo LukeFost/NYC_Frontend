@@ -23,10 +23,28 @@ const AmountInput = ({ clickedState }: AmountInputInterface) => {
   // If theDoSwitch is true and clickedState is false, disable the input;
   const isDisabled = theDoSwitch ? !clickedState : clickedState;
 
+  const preventPasteNegative = (e: any) => {
+    const clipboardData = e.clipboardData || window.Clipboard;
+    const pastedData = parseFloat(clipboardData.getData("text"));
+
+    if (pastedData < 0) {
+      e.preventDefault();
+    }
+  };
+
+  const preventMinus = (e: any) => {
+    if (e.code === "Minus") {
+      e.preventDefault();
+    }
+  };
+
   return (
     <input
       type="number"
       placeholder="..."
+      min={0}
+      onPaste={preventPasteNegative}
+      onKeyPress={preventMinus}
       className="input input-bordered max-w-xs"
       onChange={handleInputChange}
       disabled={isDisabled}
