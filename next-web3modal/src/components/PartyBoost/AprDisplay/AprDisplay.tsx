@@ -1,3 +1,4 @@
+"use client";
 interface iAprDisplay {
   poolAddress: `0x${string}`;
 }

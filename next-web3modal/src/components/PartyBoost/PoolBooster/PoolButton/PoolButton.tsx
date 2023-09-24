@@ -2,7 +2,7 @@ import { ISelect } from "../Interfaces/interfaces";
 import { FaAngleDown } from "react-icons/fa";
 
 const baseClass =
-  "w-fit h-fit rounded font-medium text-xl flex gap-2 px-3 py-2 items-center";
+  "w-fit h-fit rounded font-medium text-xl flex gap-2 px-2  items-center";
 
 export function PoolButton({ onClick, selectedPool }: ISelect) {
   if (selectedPool) {

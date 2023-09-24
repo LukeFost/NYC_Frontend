@@ -10,6 +10,7 @@ import {
   feeLevel,
   amountOutMinimum,
   sqrtPriceLimitX96,
+  UniV3,
 } from "../../../Recoil/atom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { useContractReads, erc20ABI, useAccount, useNetwork } from "wagmi";
@@ -42,15 +43,24 @@ const Approval = () => {
   const [allowance, setAllowance] = useState<bigint>(BigInt(0));
   const [tokenDecimals, setTokenDecimals] = useState(0);
   const [tokenInAmount, setTokenInAmount] = useState<bigint>(BigInt(0));
+  const newUniV3 = useRecoilValue(UniV3);
+  const [currentSpender, setCurrentSpender] = useState<`0x${string}`>("0x");
 
   // Now I have the state for Doswap, token0, & token1
   //   // Now I have to check state for switch
   const { chain } = useNetwork();
-  const currentSpender =
-    chain?.name == "Arbitrum Goerli"
-      ? "0xab7664500b19a7a2362Ab26081e6DfB971B6F1B0"
-      : "0x68b3465833fb72A70ecDF485E0e4C7bD8665Fc45";
+  if (newUniV3) {
+    chain?.name === "Arbitrum Goerli"
+      ? setCurrentSpender("0xab7664500b19a7a2362Ab26081e6DfB971B6F1B0")
+      : setCurrentSpender("0x68b3465833fb72A70ecDF485E0e4C7bD8665Fc45");
+  } else {
+    chain?.name === "Gnosis Chain"
+      ? setCurrentSpender("0x8c38Ad390eefDE0Ec145F80cdF8350cbb5Fb4962")
+      : setCurrentSpender("0x8c1698Ae4c9F5f9b29681ACcD0E6b8c88273ed44");
+  }
+
   const { address } = useAccount();
+
   useEffect(() => {
     if (address) {
       setUserAddress(address);
@@ -58,6 +68,11 @@ const Approval = () => {
       setUserAddress("0x");
     }
   }, [address]);
+
+  //I need to make an approval for the spending contract
+  // Switch currentSpender with different address,
+  //If toggle is on V3 change nothing, if toggle is on V4 switch approve to different Spender
+  // If toggle is on V4 switch to a different SwapButton.
 
   const { data, isSuccess, isLoading } = useContractReads({
     contracts: [

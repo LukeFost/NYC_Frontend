@@ -1,5 +1,5 @@
 // Get the Selected Pools address and read it for the total pooled assets within it
-
+"use client";
 interface ILiquidityDisplay {
   poolAddress: `0x${string}`;
 }

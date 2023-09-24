@@ -12,9 +12,7 @@ const PartyPage = () => {
       <div className="flex flex-col lg:flex-row items-center justify-center flex-grow shadow-xl rounded-lg p-4 bg-base-300 m-4 sm:w-96 lg:w-1/3">
         {/* Left Column */}
         <div className="flex flex-col w-full lg:w-1/2 h-3/4 mb-4 lg:mb-0 min-h-[200px]">
-          <div className="flex items-center justify-center bg-blue-300 h-1/3 border-b-2">
-            <PoolSelector clickedState />
-          </div>
+          <div className="flex items-center justify-center bg-blue-300 h-1/3 border-b-2"></div>
           <div className="flex items-center justify-center bg-blue-400 h-1/3 border-b-2">
             <LiquidityDisplay poolAddress={"0xhello"} />
           </div>
@@ -26,7 +24,7 @@ const PartyPage = () => {
         {/* Right Column */}
         <div className="flex flex-col w-full lg:w-1/2 h-3/4 min-h-[200px]">
           <div className="flex items-center justify-center bg-red-300 h-1/2 border-b-2">
-            <PoolSelector clickedState />
+            <PoolSelector clickedState={true} />
             <input
               type="text"
               placeholder="Type here"

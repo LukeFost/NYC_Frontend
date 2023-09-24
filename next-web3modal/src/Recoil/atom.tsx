@@ -109,3 +109,31 @@ export const pool1 = atom<`0x${string}`>({
   key: "pool1Address",
   default: undefined,
 });
+
+export const userPoolAddress = atom<`0x${string}`>({
+  key: "userPoolAddress",
+  default: undefined,
+});
+
+export const firstInputField = atom<number>({
+  key: "firstCreatePoolField",
+  default: undefined,
+});
+export const secondInputField = atom<number>({
+  key: "secondCreatePoolField",
+  default: undefined,
+});
+export const thirdInputField = atom<number>({
+  key: "thirdCreatePoolField",
+  default: undefined,
+});
+
+export const UniV3 = atom<boolean>({
+  key: "uniswapv3trueornot",
+  default: undefined,
+});
+
+export const targetDomain = atom<string>({
+  key: "futuredomainpower",
+  default: undefined,
+});
