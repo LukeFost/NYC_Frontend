@@ -2,16 +2,23 @@
 
 import { useEffect, useState } from "react";
 import { BaseError } from "viem";
+import { parseEther } from "viem";
 import {
   erc20ABI,
   useContractWrite,
   usePrepareContractWrite,
   useWaitForTransaction,
   useNetwork,
+  useAccount,
 } from "wagmi";
 import { swapRouter_abi } from "../../ABI/swapRouter_abi";
-import { customChangerMinimum } from "../../../Recoil/atom";
-import { useRecoilState } from "recoil";
+import { swapRouter4_abi } from "../../ABI/swapRouter4_abi";
+import {
+  customChangerMinimum,
+  UniV3,
+  targetDomain,
+} from "../../../Recoil/atom";
+import { useRecoilState, useRecoilValue } from "recoil";
 
 interface ISwapButton {
   tokenIn: `0x${string}`;
@@ -33,14 +40,30 @@ const SwapButton = ({
   sqrtPriceLimitX96,
 }: ISwapButton) => {
   const { chain } = useNetwork();
+  const { address } = useAccount();
+  const newUniV3 = useRecoilValue(UniV3);
+  const futureDomain = useRecoilValue(targetDomain);
 
   const [customChangeAmount, setCustomChangeAmount] =
     useRecoilState(customChangerMinimum);
+  const [currentSpender, setCurrentSpender] = useState<`0x${string}`>("0x");
+  const [selectedAbi, setSelectedAbi] = useState<any>(swapRouter_abi);
 
-  const activeAddress =
-    chain?.name === "Arbitrum Goerli"
-      ? "0xab7664500b19a7a2362Ab26081e6DfB971B6F1B0"
-      : "0x68b3465833fb72A70ecDF485E0e4C7bD8665Fc45";
+  useEffect(() => {
+    setSelectedAbi(newUniV3 ? swapRouter_abi : swapRouter4_abi);
+  }, [newUniV3]);
+
+  useEffect(() => {
+    if (newUniV3) {
+      chain?.name === "Arbitrum Goerli"
+        ? setCurrentSpender("0xab7664500b19a7a2362Ab26081e6DfB971B6F1B0")
+        : setCurrentSpender("0x68b3465833fb72A70ecDF485E0e4C7bD8665Fc45");
+    } else {
+      chain?.name == "Gnosis"
+        ? setCurrentSpender("0x8c1698Ae4c9F5f9b29681ACcD0E6b8c88273ed44")
+        : setCurrentSpender("0x8c05fEE7945076d7FB87a9318702eF7858Db19D5");
+    }
+  }, [newUniV3]);
 
   const ExactInputSingleParams = {
     tokenIn: tokenIn,
@@ -52,17 +75,24 @@ const SwapButton = ({
     sqrtPriceLimitX96: sqrtPriceLimitX96,
   };
 
+  const argsForContract = newUniV3
+    ? [ExactInputSingleParams]
+    : [tokenIn, amountIn, futureDomain, address, tokenOut];
+  const functionNameForContract = newUniV3
+    ? "exactInputSingle"
+    : "swapToOtherChain";
+
   const { config, error, data } = usePrepareContractWrite({
-    address: activeAddress,
-    abi: swapRouter_abi,
-    functionName: "exactInputSingle",
-    args: [ExactInputSingleParams],
-    value: BigInt(0),
+    address: currentSpender,
+    abi: selectedAbi,
+    functionName: functionNameForContract,
+    args: argsForContract,
+    value: parseEther("0.1"),
   });
 
   useEffect(() => {
-    if (data && customChangeAmount !== data.result) {
-      setCustomChangeAmount(data.result);
+    if (data && customChangeAmount !== (data?.result as unknown as bigint)) {
+      setCustomChangeAmount(data.result as unknown as bigint);
       console.log("My request for DATA!!!");
     }
   }, [data, customChangeAmount, setCustomChangeAmount]);

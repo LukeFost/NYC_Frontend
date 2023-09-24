@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { BaseError, parseEther } from "viem";
 import {
   erc20ABI,
@@ -9,8 +9,9 @@ import {
   useWaitForTransaction,
   useNetwork,
 } from "wagmi";
-
+import { UniV3 } from "../../../Recoil/atom";
 import "react-toastify/dist/ReactToastify.css";
+import { useRecoilState, useRecoilValue } from "recoil";
 
 interface Iapprovebutt {
   activeToken: `0x${string}`;
@@ -19,10 +20,21 @@ interface Iapprovebutt {
 const ApproveButton = ({ activeToken }: Iapprovebutt) => {
   const { chain } = useNetwork();
   const _value = parseEther("99999999999999999999999999999999999999999999999");
-  const currentSpender =
-    chain?.name == "Arbitrum Goerli"
-      ? "0xab7664500b19a7a2362Ab26081e6DfB971B6F1B0"
-      : "0x68b3465833fb72A70ecDF485E0e4C7bD8665Fc45";
+  const newUniV3 = useRecoilValue(UniV3);
+  const [currentSpender, setCurrentSpender] = useState<`0x${string}`>("0x");
+
+  useEffect(() => {
+    if (newUniV3) {
+      chain?.name === "Arbitrum Goerli"
+        ? setCurrentSpender("0xab7664500b19a7a2362Ab26081e6DfB971B6F1B0")
+        : setCurrentSpender("0x68b3465833fb72A70ecDF485E0e4C7bD8665Fc45");
+    } else {
+      chain?.name === "Gnosis Chain"
+        ? setCurrentSpender("0x8c05fEE7945076d7FB87a9318702eF7858Db19D5")
+        : setCurrentSpender("0x8c1698Ae4c9F5f9b29681ACcD0E6b8c88273ed44");
+    }
+  }, [newUniV3]);
+
   const { config, error } = usePrepareContractWrite({
     address: activeToken,
     abi: erc20ABI,

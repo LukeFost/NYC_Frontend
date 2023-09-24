@@ -62,7 +62,7 @@ export const tokens = atom<TokenVector[]>({
     {
       protocol: "Goerli",
       token: {
-        name: "ETHER",
+        name: "ETHER - Arb Goerli",
         symbol: "ETH",
         address: "0x",
       },
@@ -70,7 +70,7 @@ export const tokens = atom<TokenVector[]>({
     {
       protocol: "Arbitrum Goerli",
       token: {
-        name: "Hogwell",
+        name: "Hogwell - Arb Goerli",
         symbol: "HOG",
         address: "0x3cA0BDc410F58d04564C07ecD7f9A994F012e04b",
       },
@@ -78,9 +78,25 @@ export const tokens = atom<TokenVector[]>({
     {
       protocol: "Arbitrum Goerli",
       token: {
-        name: "Wrapped ETH",
+        name: "Wrapped ETH - Arb Goerli",
         symbol: "WETH",
         address: "0x865782BE8B791A8C11D174Da06D60Fa32828459C",
+      },
+    },
+    {
+      protocol: "Scroll Sepolia",
+      token: {
+        name: "Epic Dai - Scroll Sepolia",
+        symbol: "EDAI",
+        address: "0x62f02E0C7daEE5Fa55F3299dAF0b5b3435287D87",
+      },
+    },
+    {
+      protocol: "Gnosis Chain",
+      token: {
+        name: "Hogwell - Gnosis",
+        symbol: "HOG",
+        address: "0xDCbf6ECf42ab6a2b9c4F2473026303a383692238",
       },
     },
   ],
@@ -108,4 +124,14 @@ export const pool0 = atom<`0x${string}`>({
 export const pool1 = atom<`0x${string}`>({
   key: "pool1Address",
   default: undefined,
+});
+
+export const UniV3 = atom<boolean>({
+  key: "uniswapv3trueornot",
+  default: true,
+});
+
+export const targetDomain = atom<string>({
+  key: "futuredomainpower",
+  default: "0",
 });

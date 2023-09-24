@@ -48,7 +48,7 @@ const AmountInput = ({ clickedState }: AmountInputInterface) => {
   return (
     <input
       type="number"
-      placeholder={isDisabled ? formatEther(valueToDisplay) : "..."}
+      placeholder={"..."}
       min={0}
       onPaste={preventPasteNegative}
       onKeyPress={preventMinus}

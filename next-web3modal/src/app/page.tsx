@@ -12,6 +12,8 @@ import { SignTypedData } from "../components/SignTypedData";
 import AmountInput from "../components/Swap/AmountInput/AmountInput";
 import Approval from "../components/Swap/Approval/Approval";
 import Switcher from "../components/Swap/Switcher/Switcher";
+import CurrentTargetDomain from "../components/Swap/TargetDomain/TargetDomain";
+import ToggleV4 from "../components/Swap/ToggleV4/ToggleV4";
 import TokenSelector from "../components/Swap/TokenSelector/TokenSelector/TokenSelector";
 import { Token } from "../components/Token";
 import { WatchContractEvents } from "../components/WatchContractEvents";
@@ -34,6 +36,8 @@ const Page = () => {
               <AmountInput clickedState={true} />
               <TokenSelector clickedState={true} />
             </div>
+            <ToggleV4 />
+            <CurrentTargetDomain />
           </div>
           <div className="flex items-center justify-center mt-8">
             <Approval />
